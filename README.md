@@ -33,7 +33,7 @@ http://<ip-address>:8081
 http://localhost:4001
 
 ## Test Backend Functionality
-npm test
+npm test  
 curl -X POST http://localhost:6000/submit-name -H "Content-Type: application/json" -d '{"name":"test", "age":30}'
 
 
