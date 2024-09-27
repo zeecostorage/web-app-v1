@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Define input and output files
+input_file="./db/user_cleanup.txt"  # Primary input file path
+output_file="./db/sorted_age_ranges.txt"  # Output file path
+
+# Check if the input file exists; if not, check the alternative path
+if [[ ! -f $input_file ]]; then
+    input_file="./user_cleanup.txt"
+    if [[ ! -f $input_file ]]; then
+        echo "Input file not found. Exiting."
+        exit 1
+    fi
+fi
+
+# Initialize arrays for age ranges
+declare -A age_ranges
+age_ranges["0-19"]=""
+age_ranges["20-39"]=""
+age_ranges["40-59"]=""
+age_ranges["60-79"]=""
+age_ranges["80-89"]=""
+
+# Process the input file
+while IFS=, read -r name age; do
+    age=$(echo "$age" | xargs)  # Trim whitespace
+    if [[ $age =~ ^[0-9]+$ ]]; then  # Check if age is a number
+        if [[ $age -ge 0 && $age -le 19 ]]; then
+            age_ranges["0-19"]+="$name,$age"$'\n'
+        elif [[ $age -ge 20 && $age -le 39 ]]; then
+            age_ranges["20-39"]+="$name,$age"$'\n'
+        elif [[ $age -ge 40 && $age -le 59 ]]; then
+            age_ranges["40-59"]+="$name,$age"$'\n'
+        elif [[ $age -ge 60 && $age -le 79 ]]; then
+            age_ranges["60-79"]+="$name,$age"$'\n'
+        elif [[ $age -ge 80 && $age -le 89 ]]; then
+            age_ranges["80-89"]+="$name,$age"$'\n'
+        fi
+    else
+        echo "Warning: Age '$age' for entry '$name' is not a valid number. Skipping."
+    fi
+done < "$input_file"
+
+# Ensure the output directory exists
+mkdir -p ./db
+
+# Output the sorted results
+{
+    echo "Age Range,Name,Age"
+    for range in "${!age_ranges[@]}"; do
+        if [[ -n ${age_ranges[$range]} ]]; then
+            echo -e "${age_ranges[$range]}" | while IFS=, read -r entry_name entry_age; do
+                echo "$range,$entry_name,$entry_age"
+            done
+        fi
+    done
+} > "$output_file"
+
+if [[ -s $output_file ]]; then
+    echo "Sorted age ranges saved to $output_file."
+else
+    echo "No entries were found for any age ranges."
+fi
+

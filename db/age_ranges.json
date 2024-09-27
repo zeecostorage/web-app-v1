@@ -1,0 +1,22 @@
+[
+  {
+    "age_range": "0-19",
+    "count": 16
+  },
+  {
+    "age_range": "20-39",
+    "count": 26
+  },
+  {
+    "age_range": "40-59",
+    "count": 16
+  },
+  {
+    "age_range": "60-79",
+    "count": 13
+  },
+  {
+    "age_range": "80-89",
+    "count": 15
+  }
+]
