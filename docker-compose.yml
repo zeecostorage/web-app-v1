@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "9000:9000"
+    networks:
+      - web-app-network
+
+  backend:
+    build: ./backend
+    ports:
+      - "7000:7000"
+    volumes:
+      - ~/web-app/db:/app/db
+    networks:
+      - web-app-network
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ~/web-app/jenkins_home:/var/jenkins_home
+    user: "1000:1000"
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - web-app-network
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./db:/var/lib/grafana/db
+      - ./grafana.ini:/etc/grafana/grafana.ini 
+    networks:
+      - web-app-network
+
+networks:
+  web-app-network:
+    driver: bridge
+
