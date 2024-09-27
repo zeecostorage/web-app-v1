@@ -1,0 +1,16 @@
+# Before
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+docker rmi -f $(docker images -q)
+
+sudo systemctl restart docker
+sudo ufw enable
+
+# Settings
+alias run='docker compose down && docker compose build && docker compose up -d'
+alias stop='docker compose down'
+
+# Install libs
+cd ~/web-app/backend && npm install --save-dev jest express prom-client
+cd ~/web-app/frontend && npm install react react-dom 
+cd ~/web-app/backend && npm test
