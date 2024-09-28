@@ -1,17 +1,16 @@
 services:
   backend:
-    image: ${BACKEND_IMAGE_NAME}:${BACKEND_DEPLOY_TAG}
-    #image: sirdocker/ccsd-project-backend:4
+    image: ${BACKEND_IMAGE_NAME}:${BACKEND_TARGET_TAG}
     ports:
       - "7000:7000"
     volumes:
-      - ~/web-app/db:/app/db
+      - /projects/web-app/db:/app/db
     networks:
       - web-app-network
 
   frontend:
-    image: ${FRONTEND_IMAGE_NAME}:${FRONTEND_DEPLOY_TAG}
-    #image: sirdocker/ccsd-project-frontend:4
+    # sirdocker/ccsd-project-frontend:4
+    image: ${FRONTEND_IMAGE_NAME}:${FRONTEND_TARGET_TAG}
     ports:
       - "9000:9000"
     networks:
