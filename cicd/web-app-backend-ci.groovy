@@ -19,6 +19,9 @@ pipeline {
                 dir('backend') {
                     sh script:"""
                     #!/bin/bash
+                    apt update
+                    apt install nodejs -y
+                    apt install npm -y
                     nodejs -v
                     npm -v
                     npm install
