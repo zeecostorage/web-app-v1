@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        FRONTEND_IMAGE_NAME="sirdocker/ccsd-project-frontend"
+        FRONTEND_IMAGE_NAME="dockerzarif/ccsd-project-frontend"
         IMAGE_SCAN_LOG="frontend-${BUILD_ID}-scan-result.json"
     }
 

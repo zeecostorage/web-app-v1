@@ -7,9 +7,9 @@ pipeline {
     }
 
     environment {
-        BACKEND_IMAGE_NAME="sirdocker/ccsd-project-backend"
+        BACKEND_IMAGE_NAME="dockerzarif/ccsd-project-backend"
         BACKEND_TARGET_TAG="${BACKEND_TAG}"
-        FRONTEND_IMAGE_NAME="sirdocker/ccsd-project-frontend"
+        FRONTEND_IMAGE_NAME="dockerzarif/ccsd-project-frontend"
         FRONTEND_TARGET_TAG="${FRONTEND_TAG}"
 
     }

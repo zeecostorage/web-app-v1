@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        BACKEND_IMAGE_NAME="sirdocker/ccsd-project-backend"
+        BACKEND_IMAGE_NAME="dockerzarif/ccsd-project-backend"
         IMAGE_SCAN_LOG="backend-${BUILD_ID}-scan-result.json"
     }
 
@@ -19,9 +19,6 @@ pipeline {
                 dir('backend') {
                     sh script:"""
                     #!/bin/bash
-                    apt update
-                    apt install nodejs -y
-                    apt install npm -y
                     nodejs -v
                     npm -v
                     npm install
