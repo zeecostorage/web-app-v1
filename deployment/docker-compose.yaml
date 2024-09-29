@@ -1,0 +1,23 @@
+services:
+  backend:
+    image: ${BACKEND_IMAGE_NAME}:${BACKEND_TARGET_TAG}
+    ports:
+      - "7000:7000"
+    volumes:
+      - /projects/web-app/db:/app/db
+    networks:
+      - web-app-network
+
+  frontend:
+    # sirdocker/ccsd-project-frontend:4
+    image: ${FRONTEND_IMAGE_NAME}:${FRONTEND_TARGET_TAG}
+    ports:
+      - "9000:9000"
+    networks:
+      - web-app-network
+    depends_on:
+      - backend
+
+networks:
+  web-app-network:
+    driver: bridge
